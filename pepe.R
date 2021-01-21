@@ -6,6 +6,7 @@ library(doParallel)
 
 source('compCIF.R')
 
+
 # On Windows, set cores to be 1
 if (.Platform$OS.type == "windows") {
   cores = 1
@@ -225,11 +226,13 @@ mean(1-pchisq(B$s.1^2/B$v.1, 1) < 0.05, na.rm = T)
 
 # svy
 mean(1-pchisq(B$svy.s^2/B$svy.v, 1) < 0.05, na.rm = T)
+
 # weighted
 mean(1-pchisq(B$svy2.s^2/B$svy2.v, 1) < 0.05, na.rm = T)
 
 # mean(1-pchisq(B$w.s^2/B$svy.v, 1) < 0.05, na.rm = T)
 # mean(1-pchisq(B$w2.s^2/B$svy2.v/2, 1) < 0.05, na.rm = T)
+
 
 
 

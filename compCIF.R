@@ -156,7 +156,7 @@ compCIF <- function(time, cens,
     return(list(
       as.vector(phii),
       ng[1]*sum(ng)/ng[2],
-      s, sigma))
+      s, sigma, nt))
   } else {
     return(r)
   }

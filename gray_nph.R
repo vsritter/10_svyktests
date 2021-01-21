@@ -45,14 +45,14 @@ x1 <- rep(0:1, N_pop*c(.6, .4)) #rbinom(N_pop, 1, .4)
 #         rep(0:1, N_pop*ph[5]*c(.5, .5)))
 X <- cbind(x1)
 
-n <- 10000
+n <- 1000
 f <- rep(1/length(ph), length(ph))
 
-dat <- my_simulateTwoCauseFineGrayModel(
-  N_pop, pwbeta1, beta2, X, ucp = .5, u.min = 1, u.max = 2, p = 0.7) %>%
-  bind_cols(X, Z) %>%
-  mutate(strat = rep(1:length(ph), N_pop*ph)[rank(z1)],
-         clust = rep(1:(N_pop/psu_size), each = psu_size)[rank(z1)])
+# dat <- my_simulateTwoCauseFineGrayModel(
+#   N_pop, pwbeta1, beta2, X, ucp = .5, u.min = 1, u.max = 2, p = 0.7) %>%
+#   bind_cols(X, Z) %>%
+#   mutate(strat = rep(1:length(ph), N_pop*ph)[rank(z1)],
+#          clust = rep(1:(N_pop/psu_size), each = psu_size)[rank(z1)])
 
 # dat <- fastcmprsk::simulateTwoCauseFineGrayModel(
 #   N_pop, beta1=pwbeta1[[1]], beta2, X, u.min = 1, u.max = 2, p = 0.7) %>%
@@ -60,13 +60,13 @@ dat <- my_simulateTwoCauseFineGrayModel(
 #   mutate(strat = rep(1:length(ph), N_pop*ph)[rank(z1)],
 #          clust = rep(1:(N_pop/psu_size), each = psu_size)[rank(z1)])
 
-library(cmprsk)
-table(dat$fstatus)
-table(dat$fstatus) %>% prop.table() %>% round(2)
-with(mutate(dat, x1=paste0('x',x1)),
-     plot(cuminc(ftime, fstatus, x1),
-          col=c(1,1,2,2),
-          lty=c(1,2,1,2)))
+# library(cmprsk)
+# table(dat$fstatus)
+# table(dat$fstatus) %>% prop.table() %>% round(2)
+# with(mutate(dat, x1=paste0('x',x1)),
+#      plot(cuminc(ftime, fstatus, x1),
+#           col=c(1,1,2,2),
+#           lty=c(1,2,1,2)))
 
 # with(dat, cuminc(ftime, fstatus, x1))
 
@@ -112,7 +112,7 @@ with(mutate(dat, x1=paste0('x',x1)),
 # survival:::survmean(km, rmean = max(km$time))
 
 # B <- pbmcapply::pbmclapply(1:5, mc.set.seed = T, function(r){
-B <- mclapply(1:500, mc.set.seed = T, function(r){
+# B <- mclapply(1:500, mc.set.seed = T, function(r){
   # dat <- fastcmprsk::simulateTwoCauseFineGrayModel(
   #   N_pop, beta1, beta2, X, u.min = 1, u.max = 2, p = 0.7) %>% 
   #   bind_cols(X, Z) %>% 
@@ -131,31 +131,37 @@ B <- mclapply(1:500, mc.set.seed = T, function(r){
   x1 <- rep(0:1, N_pop*ph[1]*c(.6, .4)); X <- cbind(x1)
   dat1 <- my_simulateTwoCauseFineGrayModel(
     N_pop*ph[1], pwbeta1 = lapply(b, '[', 1), beta2, ucp = .7, X, u.min = 1, u.max = 2, p = 0.7) %>% 
-    bind_cols(X)
+    bind_cols(X) %>% 
+    mutate(clust = rep(1:(N_pop*ph[1]/psu_size), each = psu_size)[rank(ftime)])
   
   x1 <- rep(0:1, N_pop*ph[2]*c(.6, .4)); X <- cbind(x1)
   dat2 <- my_simulateTwoCauseFineGrayModel(
     N_pop*ph[2], pwbeta1 = lapply(b, '[', 2), beta2, ucp = .7, X, u.min = 1, u.max = 2, p = 0.7) %>% 
-    bind_cols(X)
+    bind_cols(X) %>% 
+    mutate(clust = rep(1:(N_pop*ph[2]/psu_size), each = psu_size)[rank(ftime)])
   
   x1 <- rep(0:1, N_pop*ph[3]*c(.6, .4)); X <- cbind(x1)
   dat3 <- my_simulateTwoCauseFineGrayModel(
     N_pop*ph[3], pwbeta1 = lapply(b, '[', 3), beta2, ucp = .7, X, u.min = 1, u.max = 2, p = 0.7) %>% 
-    bind_cols(X)
+    bind_cols(X) %>% 
+    mutate(clust = rep(1:(N_pop*ph[3]/psu_size), each = psu_size)[rank(ftime)])
   
   x1 <- rep(0:1, N_pop*ph[4]*c(.6, .4)); X <- cbind(x1)
   dat4 <- my_simulateTwoCauseFineGrayModel(
     N_pop*ph[4], pwbeta1 = lapply(b, '[', 4), beta2, ucp = .7, X, u.min = 1, u.max = 2, p = 0.7) %>% 
-    bind_cols(X)
+    bind_cols(X) %>% 
+    mutate(clust = rep(1:(N_pop*ph[4]/psu_size), each = psu_size)[rank(ftime)])
   
   x1 <- rep(0:1, N_pop*ph[5]*c(.6, .4)); X <- cbind(x1)
   dat5 <- my_simulateTwoCauseFineGrayModel(
     N_pop*ph[5], pwbeta1 = lapply(b, '[', 5), beta2, ucp = .7, X, u.min = 1, u.max = 2, p = 0.7) %>% 
-    bind_cols(X)
+    bind_cols(X) %>% 
+    mutate(clust = rep(1:(N_pop*ph[5]/psu_size), each = psu_size)[rank(ftime)])
   
   dat <- bind_rows(dat1, dat2, dat3, dat4, dat5) %>% 
-    mutate(strat = rep(1:length(ph), N_pop*ph))#,#[rank(z1)],
-           # clust = rep(1:(N_pop/psu_size), each = psu_size)[rank(z1)])
+    mutate(strat = rep(1:length(ph), N_pop*ph))
+  
+  # table(dat$fstatus) %>% prop.table()
   
   dat_srs <-  sample_n(dat, n)
   
@@ -184,7 +190,9 @@ B <- mclapply(1:500, mc.set.seed = T, function(r){
     do({
       nh = n*f[.$strat[1]]
       Nh = N_pop*ph[.$strat[1]]
-      sample_n(., nh) %>%
+      c <- sample(sample(Nh/psu_size, nh/psu_size))
+      
+      filter(., clust %in% c) %>%
         mutate(prob = nh/Nh,
                w = 1/prob)
     })

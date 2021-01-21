@@ -121,6 +121,8 @@ B <- mclapply(1:500, mc.set.seed = T, function(r){
   #           seq(-.9, -1.1, length.out = 5))
   b <- list(c(.3,.3,.3,0,0),
             c(-1,-1,-1,0,0))
+  b <- list(c(.3,.3,0,0,0),
+            c(.3,.3,0,0,0))
   
   x1 <- rep(0:1, N_pop*ph[1]*c(.6, .4)); X <- cbind(x1)
   dat1 <- my_simulateTwoCauseFineGrayModel(
@@ -255,6 +257,8 @@ mean(1-pchisq(B$s.1^2/B$v.1, 1) < 0.05, na.rm = T)
 
 # svy
 mean(1-pchisq(B$svy.s^2/B$svy.v, 1) < 0.05, na.rm = T)
+
+# weighted
 mean(1-pchisq(B$svy2.s^2/B$svy2.v, 1) < 0.05, na.rm = T)
 
 # mean(1-pchisq(B$w.s^2/B$svy.v, 1) < 0.05, na.rm = T)
