@@ -21,25 +21,25 @@ if (.Platform$OS.type == 'windows') {
 
 # -------------------------------------------------------------------------
 
-# ENV_SIMID <- 11
-# ENV_SEED <- 42867464
-# ENV_CENS <- 20
-# ENV_S_SIZE <- 1000
-# ENV_PSU_SIZE <- 5
-# ENV_EFFECT <- 2
+ENV_SIMID <- 11
+ENV_SEED <- 42867464
+ENV_CENS <- 20
+ENV_S_SIZE <- 1000
+ENV_PSU_SIZE <- 5
+ENV_EFFECT <- 2
+
+ENV_REP <- 5
+ENV_TEST <- 'pepe'
+
+# ENV_SIMID <- Sys.getenv('ENV_SIMID') %>% as.numeric()
+# ENV_SEED <- Sys.getenv('ENV_SEED') %>% as.numeric()
+# ENV_CENS <- Sys.getenv('ENV_CENS') %>% as.numeric()
+# ENV_S_SIZE <- Sys.getenv('ENV_S_SIZE') %>% as.numeric()
+# ENV_PSU_SIZE <- Sys.getenv('ENV_PSU_SIZE') %>% as.numeric()
+# ENV_EFFECT <- Sys.getenv('ENV_EFFECT') %>% as.numeric()
 # 
-# ENV_REP <- 5
-# ENV_TEST <- 'pepe'
-
-ENV_SIMID <- Sys.getenv('ENV_SIMID') %>% as.numeric()
-ENV_SEED <- Sys.getenv('ENV_SEED') %>% as.numeric()
-ENV_CENS <- Sys.getenv('ENV_CENS') %>% as.numeric()
-ENV_S_SIZE <- Sys.getenv('ENV_S_SIZE') %>% as.numeric()
-ENV_PSU_SIZE <- Sys.getenv('ENV_PSU_SIZE') %>% as.numeric()
-ENV_EFFECT <- Sys.getenv('ENV_EFFECT') %>% as.numeric()
-
-ENV_REP <- Sys.getenv('ENV_REP') %>% as.numeric()
-ENV_TEST <- Sys.getenv('ENV_TEST')
+# ENV_REP <- Sys.getenv('ENV_REP') %>% as.numeric()
+# ENV_TEST <- Sys.getenv('ENV_TEST')
 
 # -------------------------------------------------------------------------
 
@@ -105,18 +105,8 @@ if (ENV_TEST == 'gray'){
 }
 
 sim <- t(c(sim, out))
-if (TASK_ID == 1) {
-  write_csv(as.data.frame(sim),
-            paste0('./longleaf/slurm_out/',
-                   toupper(ENV_TEST), '_',
-                   sprintf("%02d", ENV_SIMID), '_JOB_',
-                   JOB_ID, '.csv'))
-} else {
-  write_csv(as.data.frame(sim),
-            paste0('./longleaf/slurm_out/',
-                   toupper(ENV_TEST), '_',
-                   sprintf("%02d", ENV_SIMID), '_JOB_',
-                   JOB_ID, '.csv'), append = T)
-}
-
-# -------------------------------------------------------------------------
+write_csv(as.data.frame(sim),
+          paste0('./longleaf/slurm_out/',
+                 toupper(ENV_TEST), '_',
+                 sprintf("%02d", ENV_SIMID), '_JOB_',
+                 JOB_ID, '.csv'))

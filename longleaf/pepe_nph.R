@@ -107,6 +107,8 @@ B <- mclapply(1:ENV_REP, mc.cores = cores, mc.set.seed = T, function(r){
 # B
 
 out <- c(
+  # n
+  nrow(complete.cases(B)),
   # srs
   mean(1-pchisq(B$s^2/B$v, 1) < 0.05, na.rm = T),
   # s
@@ -115,4 +117,5 @@ out <- c(
   mean(1-pchisq(B$svy.s^2/B$svy.v, 1) < 0.05, na.rm = T),
   # weighted svy
   mean(1-pchisq(B$svy2.s^2/B$svy2.v, 1) < 0.05, na.rm = T))
-names(out) <- c('pepe_srs', 'pepe_s', 'pepe_svy', 'pepe_w_svy')
+
+names(out) <- c('n', 'pepe_srs', 'pepe_s', 'pepe_svy', 'pepe_w_svy')

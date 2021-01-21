@@ -22,7 +22,7 @@ for t in ${!env_test[@]}; do
     export ENV_CENS=${array_env_cens[idx]}
     export ENV_PSU_SIZE=${array_env_psu_size[idx]}
     export ENV_EFFECT=${array_env_effect[idx]}
-    sbatch call_sim.sh
+    sbatch longleaf/call_sim.sh
   done
 done
 
