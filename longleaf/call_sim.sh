@@ -3,7 +3,7 @@
 #SBATCH --job-name=sim_svytest
 #SBATCH --output=./longleaf/slurm_out/slurm_log_%a.out
 
-#SBATCH --array=1-20
+#SBATCH --array=1-2
 #SBATCH --ntasks=24
 #SBATCH --partition=general
 #SBATCH --time=48:00:00

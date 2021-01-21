@@ -21,29 +21,50 @@ if (.Platform$OS.type == 'windows') {
 
 # -------------------------------------------------------------------------
 
-ENV_SIMID <- 11
-ENV_SEED <- 42867464
+ENV_SIMID <- Sys.getenv('ENV_SIMID') %>% as.numeric()
+ENV_SEED <- Sys.getenv('ENV_SEED') %>% as.numeric()
+ENV_CENS <- Sys.getenv('ENV_CENS') %>% as.numeric()
+ENV_S_SIZE <- Sys.getenv('ENV_S_SIZE') %>% as.numeric()
+ENV_PSU_SIZE <- Sys.getenv('ENV_PSU_SIZE') %>% as.numeric()
+ENV_EFFECT <- Sys.getenv('ENV_EFFECT') %>% as.numeric()
+
+ENV_REP <- Sys.getenv('ENV_REP') %>% as.numeric()
+ENV_TEST <- Sys.getenv('ENV_TEST')
+
+JOB_ID <- Sys.getenv('SLURM_ARRAY_JOB_ID') %>% as.integer()
+TASK_ID <- Sys.getenv('SLURM_ARRAY_TASK_ID') %>% as.integer()
+
+# for debugging -----------------------------------------------------------
+
+ENV_SIMID <- 1
+ENV_SEED <- 68180
 ENV_CENS <- 20
 ENV_S_SIZE <- 1000
 ENV_PSU_SIZE <- 5
-ENV_EFFECT <- 2
+ENV_EFFECT <- 1
 
 ENV_REP <- 5
-ENV_TEST <- 'pepe'
+ENV_TEST <- 'gray'
 
-# ENV_SIMID <- Sys.getenv('ENV_SIMID') %>% as.numeric()
-# ENV_SEED <- Sys.getenv('ENV_SEED') %>% as.numeric()
-# ENV_CENS <- Sys.getenv('ENV_CENS') %>% as.numeric()
-# ENV_S_SIZE <- Sys.getenv('ENV_S_SIZE') %>% as.numeric()
-# ENV_PSU_SIZE <- Sys.getenv('ENV_PSU_SIZE') %>% as.numeric()
-# ENV_EFFECT <- Sys.getenv('ENV_EFFECT') %>% as.numeric()
-# 
-# ENV_REP <- Sys.getenv('ENV_REP') %>% as.numeric()
-# ENV_TEST <- Sys.getenv('ENV_TEST')
+JOB_ID <- 1111
+TASK_ID <- 1
+
+# print for debugging -----------------------------------------------------
+
+ENV_SIMID
+ENV_SEED
+ENV_CENS
+ENV_S_SIZE
+ENV_PSU_SIZE
+ENV_EFFECT
+ENV_REP
+ENV_TEST
+JOB_ID
+TASK_ID
+TASK_ID
+TASK_ID
 
 # -------------------------------------------------------------------------
-
-TASK_ID <- Sys.getenv('SLURM_ARRAY_TASK_ID') %>% as.integer()
 
 # set a 'master' seed
 RNGkind("L'Ecuyer-CMRG")
@@ -88,8 +109,6 @@ if(ENV_EFFECT == 2){
 }
 
 # -------------------------------------------------------------------------
-
-JOB_ID <- Sys.getenv('SLURM_ARRAY_JOB_ID') %>% as.integer()
 
 sim <- c(ENV_SIMID, ENV_TEST, TASK_ID)
 names(sim) <- c('ENV_SIMID', 'ENV_TEST', 'TASK_ID')

@@ -110,8 +110,9 @@ B <- mclapply(1:ENV_REP, mc.cores = cores, mc.set.seed = T, function(r){
 }) %>% bind_rows()
 # B
 
-out <- c(nrow(complete.cases(B)),
+out <- c(sum(!is.na(B$pv.g1.svy)),
          mean(B$pv.g1.srs < 0.05, na.rm = T),
          mean(B$pv.g1.s < 0.05, na.rm = T),
          mean(B$pv.g1.svy < 0.05, na.rm = T))
-names(out) <- c('n', 'gray_srs', 'gray_s', 'gray_svy')
+
+names(out) <- c('n_rep', 'gray_srs', 'gray_s', 'gray_svy')
