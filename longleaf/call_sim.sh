@@ -3,8 +3,8 @@
 #SBATCH --job-name=sim_svytest
 #SBATCH --output=./longleaf/slurm_out/slurm_log_%a.out
 
-#SBATCH --array=1-2
-#SBATCH --ntasks=24
+#SBATCH --array=1-20
+#SBATCH --ntasks=20
 #SBATCH --partition=general
 #SBATCH --time=48:00:00
 #SBATCH --mem=50g
@@ -31,7 +31,7 @@ mv ./longleaf/slurm_out/*.out ${OUTPUT_DIR} 2> /dev/null
 
 if [ ${SLURM_ARRAY_TASK_ID} == 1 ]
 then
-  echo $TIME '|' $SLURM_ARRAY_JOB_ID '|' $ENV_REP'|' $ENV_TEST'|' $ENV_SIMID'|' $ENV_SEED'|' $ENV_S_SIZE'|' $ENV_CENS'|' $ENV_PSU_SIZE'|' $ENV_EFFECT '|' 0 | tee -a ./longleaf/slurm_out/log.txt
+  echo $TIME '|' $SLURM_ARRAY_JOB_ID '|' $ENV_REP '|' $ENV_TEST '|' $ENV_SIMID '|' $ENV_SEED '|' $ENV_S_SIZE '|' $ENV_CENS '|' $ENV_PSU_SIZE '|' $ENV_EFFECT '|' 0 | tee -a ./longleaf/slurm_out/log.txt
 fi
 
 # happy end

@@ -1,0 +1,2 @@
+ENV_SIMID,ENV_TEST,TASK_ID,n_rep,gray_srs,gray_s,gray_svy
+33,gray,15,500,0.65,0.314,0.408

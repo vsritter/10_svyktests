@@ -1,0 +1,2 @@
+ENV_SIMID,ENV_TEST,TASK_ID,n_rep,pepe_srs,pepe_s,pepe_svy,pepe_w_svy
+32,pepe,20,500,0.498,0.198,0.1,0.178

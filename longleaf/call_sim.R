@@ -36,18 +36,18 @@ TASK_ID <- Sys.getenv('SLURM_ARRAY_TASK_ID') %>% as.integer()
 
 # for debugging -----------------------------------------------------------
 
-ENV_SIMID <- 1
-ENV_SEED <- 68180
-ENV_CENS <- 20
-ENV_S_SIZE <- 1000
-ENV_PSU_SIZE <- 5
-ENV_EFFECT <- 1
-
-ENV_REP <- 5
-ENV_TEST <- 'gray'
-
-JOB_ID <- 1111
-TASK_ID <- 1
+# ENV_SIMID <- 1
+# ENV_SEED <- 68180
+# ENV_CENS <- 20
+# ENV_S_SIZE <- 500
+# ENV_PSU_SIZE <- 5
+# ENV_EFFECT <- 1
+# 
+# ENV_REP <- 5
+# ENV_TEST <- 'gray'
+# 
+# JOB_ID <- 1111
+# TASK_ID <- 1
 
 # print for debugging -----------------------------------------------------
 
@@ -60,8 +60,6 @@ ENV_EFFECT
 ENV_REP
 ENV_TEST
 JOB_ID
-TASK_ID
-TASK_ID
 TASK_ID
 
 # -------------------------------------------------------------------------
@@ -126,6 +124,7 @@ if (ENV_TEST == 'gray'){
 sim <- t(c(sim, out))
 write_csv(as.data.frame(sim),
           paste0('./longleaf/slurm_out/',
-                 toupper(ENV_TEST), '_',
-                 sprintf("%02d", ENV_SIMID), '_JOB_',
-                 JOB_ID, '.csv'))
+                 toupper(ENV_TEST), 
+                 sprintf("%02d", ENV_SIMID),
+                 '_', sprintf("%02d", TASK_ID),
+                 '_JOB', JOB_ID, '.csv'))
